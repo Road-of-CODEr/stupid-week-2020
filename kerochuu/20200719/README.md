@@ -13,4 +13,4 @@
 - [[백준 9250] 문자열 집합 판별](https://blog.naver.com/kerochuu/222035299045)
 - github mainPage 꾸미기 완료
 
-[<img src="/mainPage.png">](https://github.com/kerochuu)
+[<img src="https://github.com/Road-of-CODEr/stupid-week/blob/master/kerochuu/20200719/mainPage.png">](https://github.com/kerochuu)
