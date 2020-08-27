@@ -202,13 +202,7 @@ spec:
 
 ![](./images/k8s-05.png)
 
-
-
-
-
 > Type 필드는 중첩된 기능으로 설계되었다. - 각 레벨은 이전 레벨에 추가된다. 이는 모든 클라우드 공급자에 반드시 필요한 것은 아니지만, (예: Google Compute Engine은 LoadBalancer를 작동시키기 위해 NodePort를 할당할 필요는 없지만, AWS는 필요하다) 현재 API에는 필요하다.
-
-
 
 
 
@@ -328,7 +322,7 @@ spec:
 
 인그레스 컨트롤러는 일반적으로 로드 밸런서를 사용해서 인그레스를 수행할 책임이 있으며, 트래픽을 처리하는데 도움이 되도록 에지 라우터 또는 추가 프런트 엔드를 구성할 수도 있다.
 
-인그레스는 임의의 포트 또는 프로토콜을 노출시키지 않는다. HTTP와 HTTPS 이외의 서비스를 인터넷에 노출하려면 보통 Service.Type=NodePort 또는 Service.Type=LoadBalancer 유형의 서비스를 사용한다.
+인그레스는 임의의 포트 또는 프로토콜을 노출시키지 않는다. HTTP와 HTTPS 이외의 서비스를 인터넷에 노출하려면 보통 `Service.Type=NodePort` 또는 `Service.Type=LoadBalancer` 유형의 서비스를 사용한다.
 
 
 
@@ -345,5 +339,474 @@ spec:
 
 
 
+**경로(Path) 유형**
+
+인그레스 각 경로에는 해당하는 세가지 경로 유형이 있다. 
+
+- `ImplementationSpecific` (default) : 이 경로 유형의 일치 여부는 IngressClass에 따라 달라진다. 이를 구현할 때 별도 `pathType`으로 처리하거나, `Prefix` or `Exact` 경로 유형과 같이 동일하게 처리할 수 있다.
+- `Exact` : URL 경로의 대소문자를 엄격하게 일치시킨다.
+- `Prefix` : URL 경로의 접두사를 `/` 를 기준으로 분리한 값과 일치시킨다. 일치는 대소문자를 구분하고, 요소별로 경로 요소에 대해 수행한다.
+
+경우에 따라 인그레스의 여러 경로가 요청과 일치할 수 있다. 이 경우 가장 긴 일치하는 경로가 우선된다. 두 개의 경로가 여전히 동일하게 일치하는 경우 `Prefix` 경로 유형보다 `Exact` 경로 유형을 가진 경로가 사용된다.
 
 
+
+### 인그레스 유형
+
+- 단일 서비스 인그레스
+  - 규칙이 없는 기본 백엔드만 넣은 인그레스를 생성해 서비스 하나를 노출. Serivce의 LoadBalancer 나 NodePort, 포트 프록스(port proxy)로 대체 가능
+- 팬아웃
+  - 파드 IP 주소는 쿠버네티스 네트워크 안에서만 사용할 수 있으므로 에지 트래픽을 수용하고 클러스터의 올바른 엔드포인트에 인그레스를 제공하기 위해 간단한 팬아웃 전략을 사용한다. 실제로는 로드 밸런서와 비슷
+- 이름-기반 호스팅
+  - 웹 서버에서 인증서가 다른 여러 개의 HTTPS 웹 사이트를 동일한 TCP 포트와 IP 주소로 서비스할 때 사용하는 서버 이름 표시(SNI, Service Name Indication)와 비슷한 방식
+
+
+
+[**ingress-nginx 설치**](https://kubernetes.github.io/ingress-nginx/deploy/)
+
+```bash
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.34.1/deploy/static/provider/cloud/deploy.yaml
+```
+
+![k8s-06](./images/k8s-06.png)
+
+![k8s-07](./images/k8s-07.png)
+
+
+
+**단일 서비스 인그레스**
+
+인그레스에 규칙 없이 기본 백엔드를 지정해서 이를 수행할 수 있다.
+
+```yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress
+spec:
+  backend:
+    serviceName: testsvc
+    servicePort: 80
+```
+
+
+
+**팬아웃**
+
+팬아웃 구성은 HTTP URI에서 요청된 것을 기반으로 단일 IP 주소에서 1개 이상의 서비스로 트래픽을 라우팅한다. 인그레스를 사용하면 로드 밸런서의 수를 최소로 유지할 수 있다.
+
+```
+foo.bar.com -> 10.231.150.6 -> /foo service1:4200
+															 /bar service2:8080
+```
+
+```yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: simple-fanout-example
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: foo.bar.com
+    http:
+      paths:
+      - path: /foo
+        backend:
+          serviceName: service1
+          servicePort: 4200
+      - path: /bar
+        backend:
+          serviceName: service2
+          servicePort: 8080
+```
+
+
+
+**이름-기반 호스팅**
+
+이름 기반의 가상 호스트는 동일한 IP 주소에서 여러 호스트 이름으로 HTTP 트래픽을 라우팅하는 것을 지원한다.
+
+```
+foo.bar.com --| 						 |-> foo.bar.com service1:80
+						  | 10.231.150.6 |
+bar.foo.com --|							 |-> bar.foo.com service2:80
+```
+
+
+
+```yaml
+# whale-rcs.yaml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: whale-ingress-a
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: whale-ingress-a
+    spec:
+      containers:
+      - name: sayhey
+        image: jonbaier/httpwhalesay:0.1
+        command: ["node", "index.js",  "Whale Type A, Here."]
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: whale-ingress-b
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: whale-ingress-b
+    spec:
+      containers:
+      - name: sayhey
+        image: jonbaier/httpwhalesay:0.1
+        command: ["node", "index.js",  "Hey man, It's Whale B, Just Chillin'."]
+        ports:
+        - containerPort: 80
+```
+
+
+
+```yaml
+# whale-svcs-yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: whale-svc-a
+  labels:
+    app: whale-ingress-a
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 30301
+    protocol: TCP
+    name: http
+  selector:
+    app: whale-ingress-a
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whale-svc-b
+  labels:
+    app: whale-ingress-b
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 30284
+    protocol: TCP
+    name: http
+  selector:
+    app: whale-ingress-b
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whale-svc-default
+  labels:
+    app: whale-ingress-a
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 30302
+    protocol: TCP
+    name: http
+  selector:
+    app: whale-ingress-a
+```
+
+
+
+```bash
+$ kubectl create -f whale-rcs.yaml
+$ kubectl create -f whale-svcs.yaml
+```
+
+![k8s-01](./images/k8s-11.png)
+
+![k8s-02](./images/k8s-12.png)
+
+![k8s-03](./images/k8s-13.png)
+
+![k8s-04](./images/k8s-14.png)
+
+```yaml
+# whale-ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: whale-ingress
+spec:
+  rules:
+  - host: a.whale.hey
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: whale-svc-a
+          servicePort: 80
+  - host: b.whale.hey
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: whale-svc-b
+          servicePort: 80
+```
+
+```bash
+$ kubectl create -f whale-ingress.yaml
+$ kubectl get ingress
+```
+
+![k8s-08](./images/k8s-08.png)
+
+
+
+```bash
+$ curl --resolve a.whale.hey:80:10.231.150.6 http://a.whale.hey/
+$ curl --resolve b.whale.hey:80:10.231.150.6 http://b.whale.hey/
+```
+
+```html
+<html>
+    <head>
+        <title>HTTP Whalesay</title>
+    </head>
+    <body>
+        <pre>
+		<code>
+      Whale Type A, Here.
+            \
+             \
+                \
+                                            ##        .
+                                ## ## ##       ==
+                         ## ## ## ##      ===
+                 /""""""""""""""""___/ ===
+        ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
+                 \______ o          __/
+                    \    \        __/
+                        \____\______/
+      </code>
+      </pre>
+    <body/>
+</html>
+```
+
+```html
+<html>
+    <head>
+        <title>HTTP Whalesay</title>
+    </head>
+    <body>
+        <pre>
+		<code>
+      Hey man, It's Whale B, Just Chillin'.
+            \
+             \
+                \
+                                            ##        .
+                                ## ## ##       ==
+                         ## ## ## ##      ===
+                 /""""""""""""""""___/ ===
+        ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
+                 \______ o          __/
+                    \    \        __/
+                        \____\______/
+      </code>
+      </pre>
+    <body/>
+</html>
+```
+
+두 인그레스 포인트는 서로 다른 백엔드로 트래픽을 유도한다는 사실을 알 수 있다.
+
+
+
+### 마이그레이션, 멀티 클러스터, 이외
+
+클러스터 내부에서 클러스터 외부의 것을 가리키고 싶은 경우도 있다.
+
+서비스는 일반적으로 쿠버네티스 파드에 대한 접근을 추상화하지만, 다른 종류의 백엔드를 추상화할 수도 있다. 예로 다음과 같은 상황이 있을 수 있다.
+
+- 프로덕션 환경에서는 외부 데이터베이스 클러스터를 사용하려고 하지만, 테스트 환경에서는 자체 데이터베이스를 사용한다.
+- 한 서비스에서 다른 네임스페이스 또는 다른 클러스터의 서비스를 지정하려고 한다.
+- 워크로드를 쿠버네티스로 마이그레이션하고 있다. 해당 방식을 평가하는 동안, 쿠버네티스에서는 일정 비율의 백엔드만 실행한다.
+
+이러한 시나리오 중에서 파드 셀렉터 없이 서비스를 정의 할 수 있다.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+	name: custom-service
+spec:
+	type: LoadBalancer
+	ports:
+	- name: http
+	  protocol: TCP
+	  port: 80
+```
+
+쿠버네티스는 실제로 셀렉터를 사용하는 서비스를 생성할 때 마다 엔드포인트 리소스를 생성한다. 엔트포인트 객체는 로드 밸런싱 풀에 있는 파드 IP를 계속 추적한다. 하지만 이 서비스에는 셀렉터가 없으므로, 해당 엔드포인트 오브젝트가 자동으로 생성되지 않는다.엔트 포인트 오브젝트를 수동으로 추가하여, 서비스를 실행중인 네트워크 주소 및 포트에 서비스를 수동으로 매핑할 수 있다.
+
+```yaml
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: custom-service
+subsets:
+- addresses:
+  - ip: <x.x.x.x>
+  ports:
+  - name: http
+    port: 9376
+    targetPort: 80
+    protocol: TCP
+```
+
+
+
+**헤드리스 서비스**
+
+때때로 로드-밸런싱과 단일 서비스 IP는 필요치 않다. 이 경우, "헤드리스" 서비스를 만들어 사용할 수 있다. 명시적으로 `.spec.clusterIp` 에 `None`을 지정한다.
+
+헤드리스 서비스의 경우, 클러스터 IP가 할당되지 않고, 각 파드의 DNS에 A 레코드만 할당할 것이다. DNS를 사용하면 서비스는 클러스터 안에서 `node-js-none` 이난 `node-js-none.default.cluster.local` 로 접근할 수 있다.
+
+```yaml
+# nodejs-headless-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-js-none
+  labels:
+    name: node-js-none
+spec:
+  clusterIP: None
+  ports:
+  - port: 80
+  selector:
+    name: node-js
+```
+
+
+
+
+
+### 서비스 검색
+
+쿠버네티스는 서비스를 찾는 두 가지 기본 모드를 지원한다. - 환경 변수, DNS
+
+#### 환경 변수
+
+파드가 노드에서 실행될 때, kubelet은 각 활성화된 서비스에 대해 환경 변수 세트를 추가한다.
+
+다음은 node-js 서비스 예제에서 사용할 수 있는 k8s 환경변수 목록이다.
+
+```shell
+NODE_JS_SERVICE_HOST=10.0.0.11
+NODE_JS_SERVICE_PORT=80
+NODE_JS_PORT=tcp://10.0.0.11:80
+NODE_JS_PORT_6379_TCP=tcp://10.0.0.11:80
+NODE_JS_PORT_6379_TCP_PROTO=tcp
+NODE_JS_PORT_6379_TCP_PORT=80
+NODE_JS_PORT_6379_TCP_ADDR=10.0.0.11
+```
+
+환경 변수는 DNS를 사용할 수 없을 때 유용하지만 문제점이 있다. 시스템 생성 시에만 변수를 생성하기 때문에 나중에 온라인 서비스를 발견하지 못했을 때나 모든 시스템 환경 변수를 업데이트할 때 추가 도구가 필요하다.
+
+#### DNS
+
+DNS 서비스는 서비스 이름으로 서비스를 참고해 환경 변수와 관련된 문제를 해결한다.
+
+쿠버네티스를 지원하는 대부분의 제공자에서 DNS가 기본으로 설정되지만, [애드-온](https://kubernetes.io/ko/docs/concepts/cluster-administration/addons/)을 사용하여 쿠버네티스 클러스터의 DNS 서비스를 설정할 수 있다.
+
+```bash
+$ kubeadm init --feature-gates=CoreDNS=true
+```
+
+DNS 서버는 새로운 서비스를 위해 쿠버네티스 API를 감시하고 각각에 대한 DNS 레코드 세트를 생성한다.
+`{servieName}` 이나  `{serviceName}.{namespace}.cluster.local` 과 같이 네임스페이스를 포함하는 정규화된 이름의 두 가지 유형 중 하나로 서비스에 접근할 수 있따.
+
+### 멀티 테넌시
+
+따로 네임스페이스를 지정하지 않으면 모든 것이 기본 네임스페이스 (`default`)에서 실행되기 때문에 대부분의 경우 네임스페이스에 대한 고려 없이 쿠버네티스를 운영한다.
+
+그러나 멀티테넌시 커뮤니티를 실행하거나 클러스터 리소스의 광범위한 분리 및 격리 작업이 필요하다면 네임스페이스를 사용할 수 있다.
+
+```yaml
+# test-ns.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test
+```
+
+```bash
+$ kubectl create -f test-ns.yaml
+```
+
+생성한 네임스페이스를 사용하는 리소스를 생성
+
+```yaml
+# ns-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: utility
+  namespace: test
+spec:
+  containers:
+   - image: debian:latest
+     command:
+      - sleep
+      - "3600"
+     name: utility
+```
+
+#### 제한
+
+```bash
+$ kubectl describe ns/test
+```
+
+![k8s-09](./images/k8s-09.png)
+
+쿠버네티스는 개별 파드나 컨테이너가 사용하는 리소스와 네임스페이스 전체에서 사용하는 리소스를 쿼터로 제한한다. 현재 test 네임스페이스에는 어떤 리소스 제한이나 쿼터가 설정되어 있지 않다.
+
+이 네임스페이스에 공간을 제한해보자
+
+```yaml
+# quota.yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: test-quotas
+  namespace: test
+spec:
+  hard:
+    pods: 3
+    services: 1
+    replicationcontrollers: 1
+```
+
+```bash
+$ kubectl create -f quota.yaml
+$ kubectl describe ns/test
+```
+
+![k8s-10](./images/k8s-10.png)
