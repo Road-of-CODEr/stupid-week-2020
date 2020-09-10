@@ -28,3 +28,14 @@
 - You came to the right place to work.
 - I think so. My goal is to become a great marketer.
 - And I'd love to make it a must for everyone to use our cosmetics.
+
+## 0910
+
+- Excuse me, when is the next plane for L.A.?
+- At 12:30 pm, ma'am.
+- Okay, can I get a ticket for the economy class?
+- Here's your ticket. You can begin boarding at 11:55 AM.
+- Where can I find the boarding gate for this flight?
+- The departure gate is over there near the fast-food restaurant.
+- You will find the boarding gate as you pass the immigration.
+- Thanks.
