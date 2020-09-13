@@ -1,3 +1,5 @@
+# NAVER
+
 ## 0907
 
 - Why did oyu quit your previous job?
@@ -39,3 +41,45 @@
 - The departure gate is over there near the fast-food restaurant.
 - You will find the boarding gate as you pass the immigration.
 - Thanks.
+
+## 0911
+
+- We're in trouble. I think something is wrong with the car wheel.
+- What should we do?
+- I think we must change the car wheel.
+- Do we have a spare tire? We should look for that in the trunk.
+- Yay! We have a spare tire in the trunk.
+- Can you replace the wheel with the new tire?
+- Yes, I can. Don't worry.
+- You are so trustworthy.
+
+## 0912
+
+- Rick, how have you been?
+- Oh, not so bad, but I feel like something is missing.
+- How's come?
+- My hospital job hours have been cut to part-time.
+- Is that so? How many days do you work in a week?
+- Only a day!
+- I guess I'll have to look for another job.
+- I hope you find one soon.
+
+---
+
+# Book
+
+- Never mind
+- Smells good.
+- Let's toast!
+- Calm down.
+- I'm starving.
+- What's wrong?
+- Slow down.
+- I'm flattered.
+- I't pathetic.
+- I'm impressed.
+- Don't bother.
+- Think positive.
+- I overreacted.
+- Suit yourself.
+-
