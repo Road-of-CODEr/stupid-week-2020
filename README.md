@@ -11,7 +11,10 @@
 #### 함께 해요!
 
 - [슬랙 채널](https://road-of-coder.slack.com/archives/C01AAGFCUMC)
-  - 초대 링크를 원하시는 분은 풀리퀘를 주시면 됩니다.
+
+![Issue](assets/issue.png)
+
+- 초대 링크를 원하시는 분은 이슈를 달아 주시면 됩니다.
 
 #### Contributors
 
