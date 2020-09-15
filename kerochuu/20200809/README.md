@@ -9,3 +9,4 @@
 - Database 구현 문제 풀이 : 시간이 너무 오래걸림... 추후에 다시 풀 것
 <img src="https://github.com/Road-of-CODEr/stupid-week/blob/master/kerochuu/20200809/database.png">
 
+
