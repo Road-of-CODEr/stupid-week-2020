@@ -8,4 +8,4 @@
 - [[백준 1038] 감소하는 수](https://blog.naver.com/kerochuu/222075544886)
 - [[백준 5557] 1학년](https://blog.naver.com/kerochuu/222075597907)
 - 2020 브랜디 코딩대회 예선 참가
-<img src="https://github.com/Road-of-CODEr/stupid-week/blob/master/kerochuu/20200830/IWantMyCar.png">
+<img src="https://github.com/Road-of-CODEr/stupid-week/blob/2020/08/week5/kerochuu/IWantMyCar.png">
