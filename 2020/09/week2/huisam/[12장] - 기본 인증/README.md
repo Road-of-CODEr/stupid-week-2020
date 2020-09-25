@@ -1,4 +1,4 @@
-## ㅇHTTP 완벽가이드
+## HTTP 완벽가이드
 
 ### :one::two: 장 기본 인증
 
@@ -22,6 +22,8 @@
 <div>
   <img src="img/auth.png" text-align="center" />
 </div>
+
+
 
 #### 기본 인증의 보안 결함
 
