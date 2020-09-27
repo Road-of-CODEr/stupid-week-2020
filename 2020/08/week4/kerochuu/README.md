@@ -7,4 +7,4 @@
 - [[백준 17842] 버스 노선](https://blog.naver.com/kerochuu/222068842906)
 - [[백준 16165] 걸그룹 마스터 준석이](https://blog.naver.com/kerochuu/222068847509)
 - 코딩테스트 문제출제
-<img src="https://github.com/Road-of-CODEr/stupid-week/blob/master/kerochuu/20200823/IWantMyCar.png">
+<img src="https://github.com/Road-of-CODEr/stupid-week/blob/master/2020/08/week4/kerochuu/IWantMyCar.png">
