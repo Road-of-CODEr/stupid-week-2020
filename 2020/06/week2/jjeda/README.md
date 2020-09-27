@@ -12,4 +12,4 @@
 ## 결과
 - [Blocking, Non-blocking, Asynchronous, Synchronous](https://jjeda.tistory.com/26)
 - [코틀린, 코틀린답게 사용하기 - 4. Lambda](https://jjeda.tistory.com/25)
-- [프로그래머스 - 실패율](zio/stupid_week/2020/06/week2/jjeda/failureRate)
+- [프로그래머스 - 실패율](failureRate)

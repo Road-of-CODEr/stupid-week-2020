@@ -4,5 +4,5 @@
 코틀린 쿡북 짱짱2 
    
 ## 결과
-- [코틀린 쿡북 Chapter6 ~](zio/stupid_week/2020/07/week1/jjeda/KotlinCookBook2.md)
-- [프로그래머스 - 괄호변환](zio/stupid_week/2020/07/week1/jjeda/Parenthesis.kt)
+- [코틀린 쿡북 Chapter6 ~](KotlinCookBook2.md)
+- [프로그래머스 - 괄호변환](Parenthesis.kt)

@@ -8,4 +8,4 @@
 ## 결과
 - [코틀린, 코틀린답게 사용하기 - 2. Extensions](https://jjeda.tistory.com/23)
 - [코틀린, 코틀린답게 사용하기 - 3. Class](https://jjeda.tistory.com/24)
-- [프로그래머스 - 오픈채팅방](zio/stupid_week/2020/06/week1/jjeda/OpenChattingRoom.kt)
+- [프로그래머스 - 오픈채팅방](OpenChattingRoom.kt)

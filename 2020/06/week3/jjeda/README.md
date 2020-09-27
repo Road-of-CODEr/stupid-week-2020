@@ -7,5 +7,5 @@ kotlin in action 의 기본적인 문법파트는 끝났기 때문에 코틀린 
 
 ## 결과
 - [코틀린, 코틀린답게 사용하기 - 5. Type System](https://jjeda.tistory.com/27)
-- [프로그래머스 - 탑](zio/stupid_week/2020/06/week3/jjeda/Top.kt)
-- [프로그래머스 - 문자열압축](zio/stupid_week/2020/06/week3/jjeda/CompressString.kt)
+- [프로그래머스 - 탑](Top.kt)
+- [프로그래머스 - 문자열압축](CompressString.kt)
