@@ -40,8 +40,9 @@
 7. 로깅: 선택적으로, 이러한 트랜잭션 과정을 로그로 남긴다
 
 <div>
-  <img src="img/cache_hit.PNG" text-align="center" />
+  <img src="img/cache_hit.png" text-align="center" />
 </div>
+
 
 #### 그럼 어떻게 사본을 신선하게 유지할 수 있을까?
 

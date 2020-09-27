@@ -6,6 +6,8 @@
   <img src="img/proxy.png" text-align="center" />
 </div>
 
+
+
 #### Proxy vs Gateway
 
 `Proxy` 는 **같은 프로토콜** :phone: 을 사용하는 둘 이상의 애플리케이션을 연결하고,  
@@ -42,6 +44,8 @@ Gateway는 서로 다른 프로토콜로 이야기를 하더라도 서로간의 
 
 
 
+
+
 경우에 따라서는 Proxy는 여러 부모들을 가질 수 있다. 
 
 그림은 이렇게 되어 있지만, Proxy는 상황에 맞게 알맞은 부모를 선택할 수 있다. 
@@ -56,6 +60,8 @@ Gateway는 서로 다른 프로토콜로 이야기를 하더라도 서로간의 
 <div>
   <img src="img/proxy_processing.png" text-align="center" />
 </div>
+
+
 #### 프락시 요청의 미묘한 특징들
 
 * Proxy의 URI는 서버 URI와 다르다
@@ -79,11 +85,15 @@ Gateway는 서로 다른 프로토콜로 이야기를 하더라도 서로간의 
   <img src="img/uri_resolution.png" text-align="center" />
 </div>
 
+
+
 * **명시적인 프락시를 사용할 때 URI 분석**
 
 <div>
   <img src="img/name_proxy.png" text-align="center" />
 </div>
+
+
 
 #### 메세지 추적
 
