@@ -1,7 +1,7 @@
 leetcode
 
-- [1582](leetcode1582.js), [1583](leetcode1583.js)
+- [1584](leetcode1584.js)
 
 backjoon
 
-- [15552](boj15552.js)
+- [1976](boj1976.js)
