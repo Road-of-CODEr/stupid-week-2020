@@ -4,15 +4,14 @@
 
 함께 목표를 지키며 시너지를 내며 진정한 코더 땔감으로 거듭나는 것이 목표.
 
-- [x] 낙오자 강퇴(0 명)
 - [x] 3/4 분기 미팅: 현황 및 목표치 공유
 - [ ] 연말 회고(12월 중순)
 
 #### 함께 해요!
 
-- [슬랙 채널](https://road-of-coder.slack.com/archives/C01AAGFCUMC)
-
 ![Issue](assets/issue.png)
+
+- [슬랙 채널](https://road-of-coder.slack.com/archives/C01AAGFCUMC)
 
 - 초대 링크를 원하시는 분은 이슈를 달아 주시면 됩니다.
 
