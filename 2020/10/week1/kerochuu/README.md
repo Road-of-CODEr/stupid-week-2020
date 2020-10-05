@@ -8,5 +8,5 @@
 - [[백준 20010] 악덕 영주 혜유](https://blog.naver.com/kerochuu/222105614999)
 - [[백준 13335] 트럭](https://blog.naver.com/kerochuu/222105641937)
 - 첫 셀프세차 완료
-<img src="https://github.com/Road-of-CODEr/stupid-week/blob/kerochuu/2020/10/week1/kerochuu/myCar1.png">
-<img src="https://github.com/Road-of-CODEr/stupid-week/blob/kerochuu/2020/10/week1/kerochuu/myCar2.png">
+<img src="https://github.com/Road-of-CODEr/stupid-week/blob/kerochuu/2020/10/week1/kerochuu/myCar1.jpg">
+<img src="https://github.com/Road-of-CODEr/stupid-week/blob/kerochuu/2020/10/week1/kerochuu/myCar2.jpg">
