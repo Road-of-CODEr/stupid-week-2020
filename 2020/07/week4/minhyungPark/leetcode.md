@@ -1,6 +1,6 @@
 ## Leetcode
 
-![](./images/leetcode.png)
+<img width="774" alt="leetcode" src="https://user-images.githubusercontent.com/46305139/95685012-40334f00-0c30-11eb-8f06-ddea01413a71.png">
 
 
 

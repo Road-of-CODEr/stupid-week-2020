@@ -125,13 +125,13 @@ $ kubectl create -f nodejs-service-internal.yaml
 $ kubectl get services -l name=node-js-internal
 ```
 
-![](./images/k8s-01.png)
+<img width="737" alt="k8s-01" src="https://user-images.githubusercontent.com/46305139/95684857-483ebf00-0c2f-11eb-8454-abe0e48b4551.png">
 
 ```bash
 $ kubectl exec node-js-pod -- curl <node-js-internal IP>
 ```
 
-![](./images/k8s-02.png)
+<img width="1888" alt="k8s-02" src="https://user-images.githubusercontent.com/46305139/95684859-48d75580-0c2f-11eb-9864-208621673f0e.png">
 
 
 
@@ -170,7 +170,7 @@ $ kubectl create -f nodejs-service-nodeport.yaml
 $ kubectl get svc -l name=node-js-nodeport
 ```
 
-![](./images/k8s-03.png)
+<img width="697" alt="k8s-03" src="https://user-images.githubusercontent.com/46305139/95684860-496fec00-0c2f-11eb-9f90-d07dd24d915f.png">
 
 테스트하는 URL 유형
 
@@ -200,7 +200,7 @@ spec:
     deployment: test
 ```
 
-![](./images/k8s-05.png)
+<img width="1103" alt="k8s-05" src="https://user-images.githubusercontent.com/46305139/95684863-4b39af80-0c2f-11eb-934a-417daf27a4bd.png">
 
 > Type 필드는 중첩된 기능으로 설계되었다. - 각 레벨은 이전 레벨에 추가된다. 이는 모든 클라우드 공급자에 반드시 필요한 것은 아니지만, (예: Google Compute Engine은 LoadBalancer를 작동시키기 위해 NodePort를 할당할 필요는 없지만, AWS는 필요하다) 현재 API에는 필요하다.
 
@@ -368,9 +368,9 @@ spec:
 $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.34.1/deploy/static/provider/cloud/deploy.yaml
 ```
 
-![k8s-06](./images/k8s-06.png)
+<img width="930" alt="k8s-06" src="https://user-images.githubusercontent.com/46305139/95684865-4c6adc80-0c2f-11eb-99ba-a8f8f4bde6f1.png">
 
-![k8s-07](./images/k8s-07.png)
+<img width="836" alt="k8s-07" src="https://user-images.githubusercontent.com/46305139/95684867-4e34a000-0c2f-11eb-8f1c-5a4d63d47bf2.png">
 
 
 
@@ -535,13 +535,13 @@ $ kubectl create -f whale-rcs.yaml
 $ kubectl create -f whale-svcs.yaml
 ```
 
-![k8s-01](./images/k8s-11.png)
+<img width="456" alt="k8s-11" src="https://user-images.githubusercontent.com/46305139/95684872-5391ea80-0c2f-11eb-8993-acb2a3e3b8fb.png">
 
-![k8s-02](./images/k8s-12.png)
+<img width="485" alt="k8s-12" src="https://user-images.githubusercontent.com/46305139/95684873-542a8100-0c2f-11eb-9344-87dd2ae73f46.png">
 
-![k8s-03](./images/k8s-13.png)
+<img width="494" alt="k8s-13" src="https://user-images.githubusercontent.com/46305139/95684874-542a8100-0c2f-11eb-8d45-aa7ac9292a45.png">
 
-![k8s-04](./images/k8s-14.png)
+<img width="744" alt="k8s-14" src="https://user-images.githubusercontent.com/46305139/95684875-54c31780-0c2f-11eb-8383-99a7c8526390.png">
 
 ```yaml
 # whale-ingress.yaml
@@ -572,7 +572,7 @@ $ kubectl create -f whale-ingress.yaml
 $ kubectl get ingress
 ```
 
-![k8s-08](./images/k8s-08.png)
+<img width="575" alt="k8s-08" src="https://user-images.githubusercontent.com/46305139/95684868-51c82700-0c2f-11eb-905c-4429ddc13084.png">
 
 
 
@@ -784,7 +784,7 @@ spec:
 $ kubectl describe ns/test
 ```
 
-![k8s-09](./images/k8s-09.png)
+<img width="461" alt="k8s-09" src="https://user-images.githubusercontent.com/46305139/95684869-51c82700-0c2f-11eb-9850-d985ea49dfa0.png">
 
 쿠버네티스는 개별 파드나 컨테이너가 사용하는 리소스와 네임스페이스 전체에서 사용하는 리소스를 쿼터로 제한한다. 현재 test 네임스페이스에는 어떤 리소스 제한이나 쿼터가 설정되어 있지 않다.
 
@@ -809,4 +809,4 @@ $ kubectl create -f quota.yaml
 $ kubectl describe ns/test
 ```
 
-![k8s-10](./images/k8s-10.png)
+<img width="524" alt="k8s-10" src="https://user-images.githubusercontent.com/46305139/95684870-5260bd80-0c2f-11eb-982d-b655a61c059f.png">
