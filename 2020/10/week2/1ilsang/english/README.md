@@ -2,4 +2,4 @@
 
 - [NAVER EN](naver-en.md)
 - [100](100.md)
-- [voca]()
+- [voca](voca.md)
