@@ -5,9 +5,9 @@
 
 **URL(Uniform Resource Locator)**
 
-![그림-1.1](./assets/그림-1.1.png)
+<img width="990" alt="그림-1 1" src="https://user-images.githubusercontent.com/46305139/95684546-6e635f80-0c2d-11eb-8eb0-45cbd012dc04.png">
 
-![그림1-2](./assets/그림1-2.jpg)
+![그림1-2](https://user-images.githubusercontent.com/46305139/95684558-7f13d580-0c2d-11eb-9e72-efb608d08e7d.jpg)
 
 > 그림 1-1 : 각종 URL의 형식
 
@@ -21,7 +21,7 @@
 
 브라우저는 가장 처음해야하는 일은 입력된 URL을 해독하는 것이다. URL 형식은 프로토콜에 따라 다르므로 여기에서는 `http` 기준으로 설명합니다.
 
-![그림1-3](./assets/그림1-3.jpg)
+![그림1-3](https://user-images.githubusercontent.com/46305139/95684570-9226a580-0c2d-11eb-979b-b538e2350a19.jpg)
 
 URL은 먼저 위와 같은 요소로 분해합니다.
 
@@ -95,7 +95,7 @@ URL 규칙에서는 이와 같이 파일명을 생략해도 괜찮지만, 어느
 
 인터넷에 있는 자원을 나타내는 유일한 주소이다. 
 
- <img src="./assets/uri.png" alt="uri" style="zoom:75%;" />
+![uri](https://user-images.githubusercontent.com/46305139/95684585-ae2a4700-0c2d-11eb-90db-8b852ec8f8cf.png)
 
 
 
@@ -151,7 +151,7 @@ HTTP 요청과 응답의 구조는 서로 닮았으며, 그 구조는 다음과 
 3. 요청에 대한 모든 메타 정보가 전송되었음을 알리는 빈 줄(blank line)이 삽입됩니다.
 4. 요청과 관련된 내용(HTML 폼 콘텐츠 등)이 옵션으로 들어가거나, 응답과 관련된 문서(document)가 들어갑니다. 본문의 존재 유무 및 크기는 첫 줄과 HTTP 헤더에 명시됩니다.
 
-![그림1-4](./assets/그림1-4.png)
+![그림1-4](https://user-images.githubusercontent.com/46305139/95684572-9488ff80-0c2d-11eb-9fcf-3c77bf6164f9.png)
 
 > 그림 출처 - [developer.mozilla.org](https://developer.mozilla.org/ko/docs/Web/HTTP/Messages)
 
@@ -224,7 +224,7 @@ HTTP 요청과 응답의 구조는 서로 닮았으며, 그 구조는 다음과 
 
 따라서, 한 페이지내에 여러 컨텐츠(이미지 또는 영상)을 포함한 경우 각각 요청을 보내야 한다.
 
-<img src="./assets/그림1-5.png" alt="그림1-5" style="zoom:65%;" />
+![그림1-5](https://user-images.githubusercontent.com/46305139/95684574-95ba2c80-0c2d-11eb-886c-cf50e12dd5bc.png)
 
 > 그림 출처 - [developer.mozilla.org](https://developer.mozilla.org/ko/docs/Web/HTTP/Overview)
 

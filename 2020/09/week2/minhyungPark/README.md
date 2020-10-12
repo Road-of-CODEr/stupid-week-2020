@@ -61,5 +61,5 @@ class Solution {
 
 #### 쿠버네티스 강좌 듣기
 
-![k8s-inflearn](./k8s-inflearn.png)
+![k8s-inflearn](./k8s-inflearn.md)
 
