@@ -7,13 +7,19 @@
 - [x] 3/4 분기 미팅: 현황 및 목표치 공유
 - [ ] 연말 회고(12월 중순)
 
-#### 함께 해요!
+### 함께 해요!
 
 ![Issue](assets/issue.png)
 
-- [슬랙 채널](https://road-of-coder.slack.com/archives/C01AAGFCUMC)
+- 함께 성장 하실 분들을 모집하고 있습니다.👻 [가이드 라인](https://github.com/Road-of-CODEr/stupid-week/blob/master/.github/CONTRIBUTING.md)을 확인해 주세요!
 
-- 초대 링크를 원하시는 분은 이슈를 달아 주시면 됩니다.
+---
+
+### Stupid-week [Code of Conduct](https://github.com/Road-of-CODEr/stupid-week/blob/master/.github/CODE_OF_CONDUCT.md)
+
+### LICENSE
+
+This is released under the MIT license. See [LICENSE](LICENSE) for details.
 
 #### Contributors
 
