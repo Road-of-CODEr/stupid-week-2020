@@ -6,7 +6,7 @@ import java.util.*;
 //  @author : blog.naver.com/kerochuu 
 //  @date : 2020. 10. 18.                   
 
-public class 몇번나누어떨어질까 {
+public class 몇번나누어질까 {
 
 	public static void main(String[] args) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
