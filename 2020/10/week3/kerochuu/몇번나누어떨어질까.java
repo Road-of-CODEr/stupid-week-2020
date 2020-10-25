@@ -6,14 +6,13 @@ import java.util.*;
 //  @author : blog.naver.com/kerochuu 
 //  @date : 2020. 10. 18.                   
 
-public class ¸î¹ø³ª´©¾îÁú±î {
+public class ëª‡ë²ˆë‚˜ëˆ„ì–´ë–¨ì–´ì§ˆê¹Œ {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
-		Scanner input = new Scanner(System.in);
-		System.out.println(-calc(input.nextLong() - 1) + calc(input.nextLong()));
+		System.out.println(-calc(stol(st.nextToken()) - 1) + calc(stol(st.nextToken())));
 	}
 
 	private static long calc(long n) {
@@ -24,7 +23,7 @@ public class ¸î¹ø³ª´©¾îÁú±î {
 		return result;
 	}
 
-	private static int stoi(String input) {
-		return Integer.parseInt(input);
+	private static long stol(String input) {
+		return Long.parseLong(input);
 	}
 }
