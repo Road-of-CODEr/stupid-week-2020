@@ -1,21 +1,35 @@
 class Solution {
 public:
-bool check2(string& a, int i, int j) {
-	while (i < j && a[i] == a[j]) {
-		i++,j--;
+    vector<pair<int,int>> v;
+
+int dp[1005];
+int n;
+
+int go(int num) {
+	int& ret = dp[num];
+	if (ret != -1) return ret;
+	ret = v[num].second;
+	for (int i = num + 1; i < n; i++) {
+		if(v[num].first==v[i].first)	
+			ret = max(ret, v[num].second + go(i));
+		else if (v[num].first < v[i].first && v[num].second <= v[i].second)
+			ret = max(ret, v[num].second + go(i));
+
 	}
-	return j <= i;
+	return ret;
 }
 
-bool check(string& a, string &b) {
-	int i = 0, j = a.size()-1;
-	while (i < j && a[i] == b[j]) {
-		i++, j--;
+int bestTeamScore(vector<int>& scores, vector<int>& ages) {
+	memset(dp, -1, sizeof(dp));
+	n = scores.size();
+	for (int i = 0; i < n; i++) {
+		v.push_back({ ages[i], scores[i] });
 	}
-	return check2(a, i, j) || check2(b, i, j);
-}
-
-bool checkPalindromeFormation(string a, string b) {
-	return check(a, b) || check(b, a);
+	sort(v.begin(), v.end());
+	int ret = 0;
+	for (int i = 0; i < n; i++) {
+		ret = max(ret, go(i));
+	}
+	return ret;
 }
 };

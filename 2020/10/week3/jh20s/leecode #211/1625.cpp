@@ -1,25 +1,31 @@
 class Solution {
 public:
-int check[105][105];
-int maximalNetworkRank(int n, vector<vector<int>>& roads) {
-	vector<vector<int>>v;
-	v.resize(n + 1);
-	int ret = 0;
-	memset(check, 0, sizeof(check));
-	for (int i = 0; i < roads.size(); i++) {
-		int u = roads[i][0], w = roads[i][1];
-		v[u].push_back(w);
-		v[w].push_back(u);
-		check[u][w] = 1;
-		check[w][u] = 1;
-	}
-
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			if (i == j)continue;
-			ret = max(ret, (int)(v[i].size() + v[j].size() - check[i][j]));
+map<string, int> m;
+string findLexSmallestString(string s, int a, int b) {
+	
+	string ans = s;
+	queue<string> q;
+	q.push(s);
+	m[s] = 1;
+	while (!q.empty()) {
+		string ts = q.front();
+		q.pop();
+		ans = min(ans,ts);
+		string ns = ts;
+		for (int i = 1; i < s.size(); i += 2) {
+			ns[i] = (((ns[i] - '0') + a) % 10) + '0';
+		}
+		if(m.find(ns)==m.end()){
+			m[ns] = 1;
+			q.push(ns);
+		}
+		ns = ts.substr(s.size() - b) + ts.substr(0, s.size() - b);
+		if (m.find(ns) == m.end()){
+			m[ns] = 1;
+			q.push(ns);
 		}
 	}
-	return ret;
+	cout << ans;
+	return ans;
 }
 };
