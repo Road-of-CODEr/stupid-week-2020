@@ -40,7 +40,7 @@
 7. 로깅: 선택적으로, 이러한 트랜잭션 과정을 로그로 남긴다
 
 <div>
-  <img src="img/cache_hit.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437263-32d08e00-2124-11eb-9bbf-af4221ce0668.png" text-align="center" />
 </div>
 
 
