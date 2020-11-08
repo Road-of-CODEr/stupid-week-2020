@@ -47,8 +47,11 @@ l1.next= ListNode(2)
 l1.next.next = ListNode(4)
 
 l2 = ListNode(1)
-l2.next = ListNode(3)
-l2.next.next = ListNode(4)
+l2.next = ListNode(2)
+l2.next.next = ListNode(3)
+l2.next.next.next = ListNode(4)
+l2.next.next.next.next= ListNode(5)
+l2.next.next.next.next.next = ListNode(None)
 
 # l1, l2 = l2, l1
 # my_print(l1, l2)

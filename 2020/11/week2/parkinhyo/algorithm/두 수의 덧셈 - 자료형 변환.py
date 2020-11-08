@@ -40,4 +40,3 @@ class Solution:
             int(''.join(str(e) for e in b))
         return self.toReversedLinkedList(str(resultStr))
 
-
