@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.*;
 
 //  @author : blog.naver.com/kerochuu 
-//  @date : 2020. 10. 3.                   
-public class ¾Ç´ö¿µÁÖÇıÀ¯ {
+//  @date : 2020. 0. 3.                   
+public class ì•…ë•ì˜ì£¼í˜œìœ  {
 	private static class Node {
 		int start, dest;
 		long cost;
