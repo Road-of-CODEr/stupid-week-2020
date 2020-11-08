@@ -5,7 +5,7 @@ import java.util.*;
 
 //  @author : blog.naver.com/kerochuu 
 //  @date : 2020. 10. 3.                   
-public class Æ®·° {
+public class íŠ¸ëŸ­ {
 
 	private static class Node {
 		int idx, time;

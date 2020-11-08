@@ -5,7 +5,7 @@ import java.util.*;
 
 //  @author : blog.naver.com/kerochuu 
 //  @date : 2020. 10. 10.                   
-public class Æ®¸®ÀÇ»ö±ò°úÄõ¸® {
+public class íŠ¸ë¦¬ì˜ìƒ‰ê¹”ê³¼ì¿¼ë¦¬ {
 	private static class Node {
 		int type, V;
 
