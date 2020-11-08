@@ -25,7 +25,7 @@
 #### 서버의 멀티쓰레드 지원 여부
 
 <div>
-  <img src="img/multi.png" text-align="center"/>
+  <img src="https://user-images.githubusercontent.com/34855745/98437073-e20c6580-2122-11eb-8a28-935a31174e5a.png" text-align="center"/>
 </div>
 
 

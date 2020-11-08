@@ -3,7 +3,7 @@
 ### :six: 장 Proxy
 
 <div>
-  <img src="img/proxy.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437168-81315d00-2123-11eb-9546-9f38968a4115.png" text-align="center" />
 </div>
 
 
@@ -39,7 +39,7 @@ Gateway는 서로 다른 프로토콜로 이야기를 하더라도 서로간의 
 * 네트워크 교환 Proxy
 
 <div>
-  <img src="img/parent_proxy.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437139-58a96300-2123-11eb-8132-0c8f0c662a95.png" text-align="center" />
 </div>
 
 
@@ -58,7 +58,7 @@ Gateway는 서로 다른 프로토콜로 이야기를 하더라도 서로간의 
 #### Proxy가 트래픽을 처리하는 다양한 방법
 
 <div>
-  <img src="img/proxy_processing.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437142-5cd58080-2123-11eb-9864-c548d4f517f7.png" text-align="center" />
 </div>
 
 
@@ -82,7 +82,7 @@ Gateway는 서로 다른 프로토콜로 이야기를 하더라도 서로간의 
 * **URI Resolution ( 프락시 없는 URI 분석 )**
 
 <div>
-  <img src="img/uri_resolution.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437170-842c4d80-2123-11eb-8c53-03bcaa333f0c.png" text-align="center" />
 </div>
 
 
@@ -90,7 +90,7 @@ Gateway는 서로 다른 프로토콜로 이야기를 하더라도 서로간의 
 * **명시적인 프락시를 사용할 때 URI 분석**
 
 <div>
-  <img src="img/name_proxy.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437134-53e4af00-2123-11eb-950e-1c029e439a96.png" text-align="center" />
 </div>
 
 
