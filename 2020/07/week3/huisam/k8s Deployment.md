@@ -11,7 +11,7 @@ Deployment에는 기본적으로 옵션을 설정하는 것이 가장 중요한�
 한번 알아보도록 하겠습니다~. 
 
 <div>
-  <img src="img/k8s-deployment.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437012-7e823800-2122-11eb-9597-c5d88b65c388.png" text-align="center" />
 </div>
 
 

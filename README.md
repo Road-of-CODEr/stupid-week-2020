@@ -11,11 +11,9 @@
 
 ![Issue](assets/issue.png)
 
-- 함께 성장 하실 분들을 모집하고 있습니다.👻 [가이드 라인](https://github.com/Road-of-CODEr/stupid-week/blob/master/.github/CONTRIBUTING.md)을 확인해 주세요!
-
----
-
-### Stupid-week [Code of Conduct](https://github.com/Road-of-CODEr/stupid-week/blob/master/.github/CODE_OF_CONDUCT.md)
+- 함께 성장 하실 분들을 모집하고 있습니다.👻 
+- [가이드 라인](https://github.com/Road-of-CODEr/stupid-week/blob/master/.github/CONTRIBUTING.md)을 확인해 주세요!
+- [Code of Conduct](https://github.com/Road-of-CODEr/stupid-week/blob/master/.github/CODE_OF_CONDUCT.md)
 
 ### LICENSE
 

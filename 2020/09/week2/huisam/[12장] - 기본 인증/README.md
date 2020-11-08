@@ -20,7 +20,7 @@
 #### 요청의 상세방법
 
 <div>
-  <img src="img/auth.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437302-775c2980-2124-11eb-8edb-1bfe1a85de4b.png" text-align="center" />
 </div>
 
 

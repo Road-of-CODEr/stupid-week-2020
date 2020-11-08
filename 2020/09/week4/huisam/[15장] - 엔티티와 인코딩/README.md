@@ -61,7 +61,7 @@ boundary를 통해서 여러 메시지의 포멧들을 분리할줄 알아야한
 #### Content-Encoding
 
 <div>
-  <img src="img/content_encoding.png" text-align="center"/>
+  <img src="https://user-images.githubusercontent.com/34855745/98437351-c3a76980-2124-11eb-95ca-99a240505d48.png" text-align="center"/>
 </div>
 
 
@@ -98,7 +98,7 @@ Content-Encoding이 엔티티의 본문의 인코딩 헤더라면,
 그러니까 지속적인 연결에 대한 HTTP 에서 많이 유리한 방식이다. 
 
 <div>
-  <img src="img/chunked_encoding.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437347-c1dda600-2124-11eb-8b18-9b2a15bbd6c7.png" text-align="center" />
 </div>
 
 
@@ -155,7 +155,7 @@ Range: bytes=4000-
 이때도 `Range` 헤더를 적용할 수 있다. 
 
 <div>
-  <img src="img/range.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437360-c73af080-2124-11eb-8644-191c57456e4c.png" text-align="center" />
 </div>
 
 
@@ -166,7 +166,7 @@ Range: bytes=4000-
 일명 델타 인코딩 방식이라고 하는데, 간단히 말해서는 `버젼` 을 체크하는 방식이라고 생각하면 쉽다. 
 
 <div>
-  <img src="img/ETag.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437358-c4d89680-2124-11eb-8451-51bb5e9875c6.png" text-align="center" />
 </div>
 
 

@@ -22,7 +22,7 @@
 키가 있는 암호방식은 다음과 같이 암호화 된다. 
 
 <div>
-  <img src="img/crypt.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437324-92c73480-2124-11eb-840e-e2f7eaf5fa9d.png" text-align="center" />
 </div>
 
 
@@ -43,7 +43,7 @@
 그러므로 여러 **Client는 하나의 공개키로만 통신**이 가능하다.!(어차피 서버만 풀 수 있으므로)  
 
 <div>
-  <img src="img/public_key.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437326-9490f800-2124-11eb-806f-e73865ec8b5c.png" text-align="center" />
 </div>
 
 
@@ -90,7 +90,7 @@ HTTP에서 SSL을 타는 방식으로, 기본 Port 번호는 `443` 입니다.
 HTTP에서 핸드세이크 과정을 거칠때, **SSL 핸드세이크**라는 특별한 과정이 추가로 생기는데..   
 
 <div>
-  <img src="img/ssl.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437330-98247f00-2124-11eb-9556-a864121a7f83.png" text-align="center" />
 </div>
 
 

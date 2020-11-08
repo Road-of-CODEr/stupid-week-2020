@@ -7,7 +7,7 @@
 메세지는 항상 인바운드에서 아웃바운드로 이동한다~! 
 
 <div>
-  <img src="img/Inbound_Outbound.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437048-a83b5f00-2122-11eb-9122-b9e824b91d70.png" text-align="center" />
 </div> 
 
 #### 메세지의 각 부분
