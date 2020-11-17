@@ -5,7 +5,7 @@ import java.util.*;
 
 //  @author : blog.naver.com/kerochuu 
 //  @date : 2020. 10. 10.                   
-public class Àú¿ï {
+public class ì €ìš¸ {
 
 	static int N, M;
 	static boolean[][] table;

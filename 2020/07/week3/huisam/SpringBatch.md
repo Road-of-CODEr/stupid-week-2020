@@ -49,7 +49,7 @@ DI, AOP, 서비스 추상화 등 Spring :seedling: 에  관련된 3대요소를 
 ### Spring Batch 객체
 
 <div>
-  <img src="img/batch-obejct-relrationship.png" text-align:"center"/>
+  <img src="https://user-images.githubusercontent.com/34855745/98436835-03208680-2122-11eb-977e-c7da652cf767.png" text-align:"center"/>
 </div>
 Spring Batch 에서는 기본적으로 batch 일을 처리한다는 개념의 **Job** 이 존재합니다. 
 
@@ -92,7 +92,7 @@ public class SimpleJobConfiguration {
 한번 그림을 통해 알아보도록 하죠~. 
 
 <div>
-  <img src="img/job-step.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98436992-690d0e00-2122-11eb-997c-81ac2667d1d7.png" text-align="center" />
 </div>
 
 이렇게 그림으로 보면 Tasklet과 그 외 친구들(Reader, Processor, Writer)는 다른 친구들 처럼 보입니다. 

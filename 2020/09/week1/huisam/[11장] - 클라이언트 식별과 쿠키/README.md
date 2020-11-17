@@ -19,7 +19,7 @@
 #### 사용자 인증 과정
 
 <div>
-  <img src="img/auth.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437282-5267b680-2124-11eb-8e03-4de79be3f023.png" text-align="center" />
 </div>
 전체적인 Flow는  
 
@@ -39,7 +39,7 @@
 * **지속 쿠키(persistent cookie)**: 지속 쿠키는 세션과는 다르게, 컴퓨터를 재시작해도 유지함
 
 <div>
-  <img src="img/cookie.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437286-54ca1080-2124-11eb-9360-dda83519b4d4.png" text-align="center" />
 </div>
 
 쿠키는 일종의 클라이언트를 상태를 관리하는 것.!!  
@@ -88,7 +88,7 @@ Set-Cookie: user="mary"; domain="yahoo.com"
 #### 세션 쿠키의 예시
 
 <div>
-  <img src="img/session.png" text-align="center" />
+  <img src="https://user-images.githubusercontent.com/34855745/98437287-572c6a80-2124-11eb-8331-7764f0e8af26.png" text-align="center" />
 </div>
 
 #### 쿠키 :cookie: 의 캐싱 전략
