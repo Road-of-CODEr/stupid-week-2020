@@ -1,0 +1,6 @@
+* 8장(연결리스트)
+  * [역순 연결 리스트](https://ihp001.tistory.com/83?category=815852)
+* 9장(스택, 큐)
+  * [스택 ADT 구현하기](https://ihp001.tistory.com/84)
+  * [유효한 괄호](https://leetcode.com/problems/valid-parentheses/)
+  * [중복 문자 제거](https://leetcode.com/problems/remove-duplicate-letters/)
