@@ -4,7 +4,6 @@ class Solution2 {
     fun subsets(nums: IntArray): List<List<Int>> {
         val answer = mutableListOf<List<Int>>()
         go(nums, 0, mutableListOf(), answer)
-
         return answer
     }
 
@@ -14,15 +13,18 @@ class Solution2 {
         current: MutableList<Int>,
         answer: MutableList<List<Int>>
     ) {
-        if (index == nums.size) {
-            answer.add(current.toList())
-            return
+        when (index) {
+            nums.size -> {
+                answer.add(current.toList())
+                return
+            }
+            else -> {
+                go(nums, index + 1, current, answer)
+                current.add(nums[index])
+                go(nums, index + 1, current, answer)
+                current.removeLast()
+            }
         }
-
-        go(nums, index + 1, current, answer)
-        current.add(nums[index])
-        go(nums, index + 1, current, answer)
-        current.removeAt(current.size - 1)
     }
 }
 
