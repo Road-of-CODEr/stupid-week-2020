@@ -1,0 +1,356 @@
+From 5da0dc4466b68b03f1bc76abdfe2a42fd890c6c8 Mon Sep 17 00:00:00 2001
+From: Sunwook Eom <sunwook5492@gmail.com>
+Date: Sun, 6 Dec 2020 17:34:54 +0900
+Subject: [PATCH] Chap 05 - Safe Globals is done !
+
+eom@eom-NOTE-PC:~/git/rust-rasp-os/nook_os$ make qemu
+    [0] Hello This is eom from pure Rust world !
+    [1] Chars written: 46
+    [2] Stopping here !
+
+Signed-off-by: Sunwook Eom <sunwook5492@gmail.com>
+
+diff --git a/nook_os/Makefile b/nook_os/Makefile
+index 397fdb2..67190d5 100644
+--- a/nook_os/Makefile
++++ b/nook_os/Makefile
+@@ -65,7 +65,6 @@ qemu:
+ 	@echo "This board is not yet supported for QEMU."
+ else
+ qemu: $(KERNEL_BIN)
+-	@echo "cmd: $(DOCKER_QEMU) $(EXEC_QEMU) $(QEMU_RELEASE_ARGS) -kernel $(KERNEL_BIN)"
+ 	@$(DOCKER_QEMU) $(EXEC_QEMU) $(QEMU_RELEASE_ARGS) -kernel $(KERNEL_BIN)
+ endif
+ 
+diff --git a/nook_os/src/bsp/raspberrypi/console.rs b/nook_os/src/bsp/raspberrypi/console.rs
+index ec29fd5..7314f4e 100644
+--- a/nook_os/src/bsp/raspberrypi/console.rs
++++ b/nook_os/src/bsp/raspberrypi/console.rs
+@@ -1,20 +1,116 @@
++// SPDX-License-Identifier: MIT OR Apache-2.0
++//
++// Copyright (c) 2018-2020 Andre Richter <andre.o.richter@gmail.com>
++
++//! BSP console facilities.
++
++use crate::{console, synchronization, synchronization::NullLock};
+ use core::fmt;
+-use crate::console;
+ 
+-struct QemuOutput;
++//--------------------------------------------------------------------------------------------------
++// Private Definitions
++//--------------------------------------------------------------------------------------------------
++
++/// A mystical, magical device for generationg QEMU output out of the void.
++///
++/// The mutex protected part.
++struct QEMUOutputInner {
++    chars_written: usize,
++}
++
++//--------------------------------------------------------------------------------------------------
++// Public Definitions
++//--------------------------------------------------------------------------------------------------
++
++/// The main struct.
++struct QEMUOutput {
++    inner: NullLock<QEMUOutputInner>,
++}
++
++//--------------------------------------------------------------------------------------------------
++// Global instances
++//--------------------------------------------------------------------------------------------------
++
++static QEMU_OUTPUT: QEMUOutput = QEMUOutput::new();
++
++//--------------------------------------------------------------------------------------------------
++// Private Code
++//--------------------------------------------------------------------------------------------------
++
++impl QEMUOutputInner {
++    const fn new() -> QEMUOutputInner {
++        QEMUOutputInner { chars_written: 0 }
++    }
++
++    /// Send a character.
++    fn write_char(&mut self, c: char) {
++        unsafe {
++            core::ptr::write_volatile(0x3F20_1000 as *mut u8, c as u8);
++        }
++
++        self.chars_written += 1;
++    }
++}
+ 
+-impl fmt::Write for QemuOutput{
++/// Implementing `core::fmt::Write` enables usage of the `format_args!` macros, which in turn are
++/// used to implement the `kernel`'s `print!` and `println!` macros. By implementing `write_str()`,
++/// we get `write_fmt()` automatically.
++///
++/// The function takes an `&mut self`, so it must be implemented for the inner struct.
++///
++/// See [`src/print.rs`].
++///
++/// [`src/print.rs`]: ../../print/index.html
++impl fmt::Write for QEMUOutputInner {
+     fn write_str(&mut self, s: &str) -> fmt::Result {
+         for c in s.chars() {
+-            unsafe {
+-                core::ptr::write_volatile(0x3F20_1000 as *mut u8, c as u8);
++            // Convert newline to carrige return + newline.
++            if c == '\n' {
++                self.write_char('\r')
+             }
++
++            self.write_char(c);
+         }
+ 
+         Ok(())
+     }
+ }
+ 
+-pub fn console() -> impl console::interface::Write {
+-    QemuOutput
++//--------------------------------------------------------------------------------------------------
++// Public Code
++//--------------------------------------------------------------------------------------------------
++
++impl QEMUOutput {
++    /// Create a new instance.
++    const fn new() -> QEMUOutput {
++        QEMUOutput {
++            inner: NullLock::new(QEMUOutputInner::new()),
++        }
++    }
++}
++
++/// Return a reference to the console.
++pub fn console() -> &'static impl console::interface::All {
++    &QEMU_OUTPUT
++}
++
++//------------------------------------------------------------------------------
++// OS Interface Code
++//------------------------------------------------------------------------------
++use synchronization::interface::Mutex;
++
++/// Passthrough of `args` to the `core::fmt::Write` implementation, but guarded by a Mutex to
++/// serialize access.
++impl console::interface::Write for QEMUOutput {
++    fn write_fmt(&self, args: core::fmt::Arguments) -> fmt::Result {
++        // Fully qualified syntax for the call to `core::fmt::Write::write_fmt()` to increase
++        // readability.
++        self.inner.lock(|inner| fmt::Write::write_fmt(inner, args))
++    }
++}
++
++impl console::interface::Statistics for QEMUOutput {
++    fn chars_written(&self) -> usize {
++        self.inner.lock(|inner| inner.chars_written)
++    }
+ }
+diff --git a/nook_os/src/console.rs b/nook_os/src/console.rs
+index ec939dd..cfe4249 100644
+--- a/nook_os/src/console.rs
++++ b/nook_os/src/console.rs
+@@ -1,4 +1,31 @@
++// SPDX-License-Identifier: MIT OR Apache-2.0
++//
++// Copyright (c) 2018-2020 Andre Richter <andre.o.richter@gmail.com>
++
++//! System console.
++
++//--------------------------------------------------------------------------------------------------
++// Public Definitions
++//--------------------------------------------------------------------------------------------------
++
++/// Console interfaces.
+ pub mod interface {
++    use core::fmt;
++
++    /// Console write functions.
++    pub trait Write {
++        /// Write a Rust format string.
++        fn write_fmt(&self, args:fmt::Arguments) -> fmt::Result;
++    }
++
++    /// Console statistics
++    pub trait Statistics {
++        ///Return the number of characters written.
++        fn chars_written(&self) -> usize {
++            0
++        }
++    }
+ 
+-    pub use core::fmt::Write;
++    /// Trait alias for a full-fledged console.
++    pub trait All = Write + Statistics;
+ }
+diff --git a/nook_os/src/main.rs b/nook_os/src/main.rs
+index e403cc2..4baa92b 100644
+--- a/nook_os/src/main.rs
++++ b/nook_os/src/main.rs
+@@ -3,6 +3,7 @@
+ #![feature(naked_functions)]
+ #![feature(panic_info_message)]
+ #![feature(format_args_nl)]
++#![feature(trait_alias)]
+ #![no_main]
+ #![no_std]
+ 
+@@ -13,6 +14,7 @@ mod panic_wait;
+ mod runtime_init;
+ mod console;
+ mod print;
++mod synchronization;
+ 
+ /// Early init code.
+ ///
+@@ -20,8 +22,12 @@ mod print;
+ ///
+ /// - Only a single core must be active and running this function.
+ unsafe fn kernel_init() -> ! {
++    use console::interface::Statistics;
++
+     println!("[0] Hello This is eom from pure Rust world !");
+-    println!("[1] Stopping here !");
++    println!("[1] Chars written: {}", bsp::console::console().chars_written());
++
++    println!("[2] Stopping here !");
+ 
+     cpu::wait_forever();
+ }
+diff --git a/nook_os/src/print.rs b/nook_os/src/print.rs
+index f0fb4b6..3878302 100644
+--- a/nook_os/src/print.rs
++++ b/nook_os/src/print.rs
+@@ -1,19 +1,34 @@
++// SPDX-License-Identifier: MIT OR Apache-2.0
++//
++// Copyright (c) 2018-2020 Andre Richter <andre.o.richter@gmail.com>
++
++//! Printing facilities.
++
++use crate::{bsp, console};
+ use core::fmt;
+-use crate::bsp;
+ 
++//--------------------------------------------------------------------------------------------------
++// Public Code
++//--------------------------------------------------------------------------------------------------
++
++#[doc(hidden)]
+ pub fn _print(args: fmt::Arguments) {
+-    pub use core::fmt::Write;
++    use console::interface::Write;
++
+     bsp::console::console().write_fmt(args).unwrap();
+ }
+ 
+-/// Print string
+-
++/// Print without a newline.
++///
++/// Carbon copy from https://doc.rust-lang.org/src/std/macros.rs.html
+ #[macro_export]
+ macro_rules! print {
+     ($($args:tt)*) => (crate::print::_print(format_args!($(args)*)))
+ }
+ 
+-/// Print string with a newline
++/// Prints with a newline.
++///
++/// Carbon copy from https://doc.rust-lang.org/src/std/macros.rs.html
+ #[macro_export]
+ macro_rules! println {
+     () => (crate::print::print!("\n"));
+diff --git a/nook_os/src/synchronization.rs b/nook_os/src/synchronization.rs
+index 3d7bd41..98a5eb8 100644
+--- a/nook_os/src/synchronization.rs
++++ b/nook_os/src/synchronization.rs
+@@ -1,4 +1,13 @@
++// SPDX-License-Identifier: MIT OR Apache-2.0
++//
++// Copyright (c) 2020 Andre Richter <andre.o.richter@gmail.com>
++
+ //! Synchronization primitives.
++//!
++//! Suggested literature:
++//!   - https://doc.rust-lang.org/book/ch16-04-extensible-concurrency-sync-and-send.html
++//!   - https://stackoverflow.com/questions/59428096/understanding-the-send-trait
++//!   - https://doc.rust-lang.org/std/cell/index.html
+ 
+ use core::cell::UnsafeCell;
+ 
+@@ -9,29 +18,28 @@ use core::cell::UnsafeCell;
+ /// Synchronization interfaces.
+ pub mod interface {
+ 
+-    /// Any object implementing this trait guarantees exclusive access to the data contained within
++    /// Any object implementing this trait guarantees exclusive access to the data wrapped within
+     /// the Mutex for the duration of the provided closure.
+     pub trait Mutex {
+-        /// The type of encapsulated data.
++        /// The type of the data that is wrapped by this mutex.
+         type Data;
+ 
+-        /// Creates a critical section and grants temporary mutable access to the encapsulated data.
+-        fn lock<R>(&mut self, f: impl FnOnce(&mut Self::Data) -> R) -> R;
++        /// Locks the mutex and grants the closure temporary mutable access to the wrapped data.
++        fn lock<R>(&self, f: impl FnOnce(&mut Self::Data) -> R) -> R;
+     }
+ }
+ 
+ /// A pseudo-lock for teaching purposes.
+ ///
+-/// Used to introduce [interior mutability].
+-///
+-/// In contrast to a real Mutex implementation, does not protect against concurrent access from
++/// In contrast to a real Mutex implementation, does not protect against concurrent access from 
+ /// other cores to the contained data. This part is preserved for later lessons.
+ ///
+-/// The lock will only be used as long as it is safe to do so, i.e. as long as the kernel is
++/// The lock will only be used as long as it is safe to do so. i.e. as long as the kernel is
+ /// executing single-threaded, aka only running on a single core with interrupts disabled.
+-///
+-/// [interior mutability]: https://doc.rust-lang.org/std/cell/index.html
+-pub struct NullLock<T: ?Sized> {
++pub struct NullLock<T>
++where
++    T: ?Sized,
++{
+     data: UnsafeCell<T>,
+ }
+ 
+@@ -39,10 +47,11 @@ pub struct NullLock<T: ?Sized> {
+ // Public Code
+ //--------------------------------------------------------------------------------------------------
+ 
+-unsafe impl<T: ?Sized> Sync for NullLock<T> {}
++unsafe impl<T> Send for NullLock<T> where T: ?Sized + Send {}
++unsafe impl<T> Sync for NullLock<T> where T: ?Sized + Send {}
+ 
+-impl<T> NullLock<T> {
+-    /// Wraps `data` into a new `NullLock`.
++impl <T> NullLock<T> {
++    /// Create an instance.
+     pub const fn new(data: T) -> Self {
+         Self {
+             data: UnsafeCell::new(data),
+@@ -54,10 +63,10 @@ impl<T> NullLock<T> {
+ // OS Interface Code
+ //------------------------------------------------------------------------------
+ 
+-impl<T> interface::Mutex for &NullLock<T> {
++impl<T> interface::Mutex for NullLock<T> {
+     type Data = T;
+ 
+-    fn lock<R>(&mut self, f: impl FnOnce(&mut Self::Data) -> R) -> R {
++    fn lock<R>(&self, f: impl FnOnce(&mut Self::Data) -> R) -> R{
+         // In a real lock, there would be code encapsulating this line that ensures that this
+         // mutable reference will ever only be given out once at a time.
+         let data = unsafe { &mut *self.data.get() };
+-- 
+2.7.4
+
