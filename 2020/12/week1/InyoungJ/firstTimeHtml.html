@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>스파르타코딩클럽 | HTML 기초</title>
+    <!--   폰트 변경하는 방법, 클라이언트 pc에서 해당 폰트가 없을 경우, 다운받아서 보여줄 수 있게해주는 역할-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        .title-wrapper {
+            /* 배경 이미지를 설정하는 css 코드 */
+            background-image: url("https://image.chosun.com/sitedata/image/202006/12/2020061201417_0.jpg");
+            background-size: cover;
+            background-position: center;
+            color: RED;
+            width: 900px;
+            height: 400px;
+            padding: 100px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 50px auto;
+            font-family: 'East Sea Dokdo', cursive;
+        }
+
+        .page-wrapper {
+            width: 900px;
+            margin: 10px auto;
+            font-family: 'Poor Story', cursive;
+        }
+
+        .active {
+            aria-pressed : "true";
+        }
+
+        .buttonposition {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+                exchangeRate();
+            });
+
+        function exchangeRate() {
+            $.ajax({
+                    type: "GET",
+                    url: "https://api.manana.kr/exchange/rate.json",
+                    data: {},
+                    success: function (response) {
+                        for (let i = 0; i < response.length; i++) {
+                            if (response[i]['name'] == 'USDKRW=X') {
+                                $('#showExchange').text(response[i]['rate']);
+                                return;
+                            }
+                        }
+
+                    }
+                })
+            }
+
+        function check() {
+            let custName = $('#customersName').val();
+            //console.log(custName);
+            let orderCnt = $('#inputGroupSelect01').val();
+            console.log(orderCnt);
+            let custAddress = $('#customerAddress').val();
+            let custPhoneNum = $('#customerPhoneNumber').val();
+
+            if (custName == '') {
+                alert("주문자 이름을 입력하시오");
+                retrun;
+            }
+            else if (orderCnt == '') {
+                alert("주문 수량을 체크하시오");
+                retrun;
+            }
+            else if (custAddress == '') {
+                alert("배송 주소를 입력하시오");
+                retrun;
+            }
+            else if (custPhoneNum == '') {
+                alert("핸드폰 번호를 입력하시오");
+                retrun;
+            }
+            else if (custPhoneNum.startsWith('010') == false) {
+                alert("핸도픈 번호의 형식을 확인하시오 (010-xxxx-xxxx)")
+                retrun;
+            }
+            else {
+                return true;
+            }
+        }
+
+        function Order() {
+            check();
+
+            if (check() == true) {
+                alert("주문이 완료되었습니다.");
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <div class="title-wrapper">
+            <!-- <h1>상품 사진</h1> -->
+        </div>
+        <h1 style="display:inline">최신 공기청정기 </h1> &nbsp &nbsp 가격 : 800,000원<p></p>
+
+        <div>
+            SONY 사에서 자체 제작한 차세대 공기청정기 PLAY STAITION 5가 출시되었습니다.<p>
+                SONY만의 독자적 기술 99.9 필터를 탑재해 미세먼지와 각종 세균으로부터
+                우리 집을 안전하게 지켜줍니다.
+            <p> 또한 인체공학적 디자인으로 만들어진 차세대 리모컨은 사용자에게 안정감과 편안함을 제공합니다
+            <p></p>
+
+            <div style="color:blue ; font-size :16px"> 달러 - 원 환율: <span id="showExchange"></span> </div>
+
+        </div>
+
+
+        <div class="input">
+            <h1> 주문하기 </h1>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-name-default">주문자 이름 </span>
+                </div>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default" id="customersName">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text"> 수량 </label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                    <option value="" selected>최대 3개</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default"> 주소 </span>
+                </div>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default" id="customerAddress">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">전화번호 </span>
+                </div>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default" id="customerPhoneNumber">
+            </div>
+        </div>
+
+        <div class="buttonposition">
+            <button onclick="Order()" type="submit" class="btn btn-primary" style="margin:auto"> 주문</button>
+        </div>
+
+        <div>
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">이름</th>
+                        <th scope="col">수량</th>
+                        <th scope="col">주소</th>
+                        <th scope="col">전화번호</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+</body>
+
+</html>
