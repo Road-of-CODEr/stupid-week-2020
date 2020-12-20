@@ -5,7 +5,7 @@ addReviewers: false
 addAssignees: true
 
 # A list of assignees, overrides reviewers if set
- assignees:
+assignees:
    - 1ilsang
    - kerochuu
    - huisam
